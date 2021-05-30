@@ -1,0 +1,73 @@
+from asyncio.windows_events import NULL
+from discord.ext import commands
+import discord
+from discord.ext.commands import context
+from discord.message import Message
+from discord.reaction import Reaction
+from discord.user import User
+bot = commands.Bot(command_prefix='!')
+class XP:
+  usuario = User
+  experiencia = 0
+  def __init__(self):
+      usuario = User
+      experiencia = 0
+lista_usuarios = list()
+
+@bot.command()
+async def votacao(ctx, *emote):
+  embed = discord.Embed(title="Votacão iniciada",
+  description=f"Solicitada por {ctx.author.name}", 
+  color = discord.Color.blurple())
+  msg = await ctx.send(embed = embed)
+  if emote.__len__() > 0:
+    for emotes in emote:
+      await msg.add_reaction(emotes)
+  else:
+    await msg.add_reaction('✅')
+    await msg.add_reaction('❌')
+
+@bot.command()
+async def irritar(ctx, arg):
+  if ctx.author.id != 354037985278296064:
+    return
+  spam = ''
+  for x in range(30):
+    spam = spam + arg
+  for x in range(10):
+    await ctx.send(spam)
+
+@bot.command()
+async def xp(ctx):
+  for x in lista_usuarios:
+    if x.usuario == ctx.author:
+      await ctx.send(f'O usuário {ctx.author.name} tem {x.experiencia} pontos de experiência')
+
+@bot.event
+async def on_message(message):
+  if message.author.bot:
+    return
+  else:
+    if lista_usuarios.__len__() == 0:
+      usuarios = XP()
+      usuarios.usuario = message.author
+      usuarios.experiencia += 1
+      lista_usuarios.append(usuarios)
+    else:
+      for x in lista_usuarios:
+        if message.author == x.usuario:
+          x.experiencia += 1
+          await bot.process_commands(message)
+          return
+      usuarios = XP()
+      usuarios.usuario = message.author
+      usuarios.experiencia += 1
+      lista_usuarios.append(usuarios)
+  await bot.process_commands(message)
+
+
+@bot.event
+async def on_ready():
+  print('Bot {0.user} está em execução'.format(bot))
+
+bot.run('ODA2NTk4MTU5MTc4MjY4Njgz.YBrxEw.SIMYggZyafMpjB3C1kv0yPW4ffo')
