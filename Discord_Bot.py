@@ -80,4 +80,4 @@ async def on_ready():
   await bot.change_presence(status=Status.idle, activity=activity)
   print('Bot {0.user} está em execução'.format(bot))
 
-bot.run('ODA2NTk4MTU5MTc4MjY4Njgz.YBrxEw.TKazgb9BG0xDowKEL4bJI9yC5wk')
+bot.run(os.getenv('TOKEN'))
