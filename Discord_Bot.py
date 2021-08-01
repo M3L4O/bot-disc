@@ -6,6 +6,7 @@ from discord.message import Message
 from discord.reaction import Reaction
 from discord.user import User
 from time import sleep
+import os
 prefix = '!'
 intents = Intents.all()
 intents.reactions = True
