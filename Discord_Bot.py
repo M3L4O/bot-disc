@@ -1,11 +1,15 @@
-from asyncio.windows_events import NULL
 from discord.ext import commands
-import discord
+from discord import *
 from discord.ext.commands import context
+from discord.ext.commands.core import command
 from discord.message import Message
 from discord.reaction import Reaction
 from discord.user import User
-bot = commands.Bot(command_prefix='!')
+from time import sleep
+prefix = '!'
+intents = Intents.all()
+intents.reactions = True
+bot = commands.Bot(command_prefix = prefix, intents = intents)
 class XP:
   usuario = User
   experiencia = 0
@@ -15,27 +19,31 @@ class XP:
 lista_usuarios = list()
 
 @bot.command()
-async def votacao(ctx, *emote):
-  embed = discord.Embed(title="Votacão iniciada",
-  description=f"Solicitada por {ctx.author.name}", 
-  color = discord.Color.blurple())
-  msg = await ctx.send(embed = embed)
-  if emote.__len__() > 0:
-    for emotes in emote:
-      await msg.add_reaction(emotes)
-  else:
-    await msg.add_reaction('✅')
-    await msg.add_reaction('❌')
+async def votacao(ctx, *emojis):
+  msg = await ctx.send('Votação iniciada!')
+  if emojis != None:
+    for emoji in emojis:
+      await msg.add_reactions()
+
+ 
+
 
 @bot.command()
-async def irritar(ctx, arg):
+async def irritar(ctx, arg:Member):
   if ctx.author.id != 354037985278296064:
     return
-  spam = ''
-  for x in range(30):
-    spam = spam + arg
+  spam = '\t'.join(f"<@{arg.id}>" for x in range(10))
   for x in range(10):
     await ctx.send(spam)
+  
+@bot.command()
+async def pertubar(ctx, arg:Member):
+  if ctx.author.id != 354037985278296064:
+    return
+  spam ='\t'.join(f"<@{arg.id}>" for x in range(10))
+  for x in range(30):
+    await arg.send(spam)
+  
 
 @bot.command()
 async def xp(ctx):
@@ -68,6 +76,8 @@ async def on_message(message):
 
 @bot.event
 async def on_ready():
+  activity = Game(name=f"A morte é como o vento, está sempre ao meu lado. prefix = {prefix}", type=1)
+  await bot.change_presence(status=Status.idle, activity=activity)
   print('Bot {0.user} está em execução'.format(bot))
 
-bot.run('ODA2NTk4MTU5MTc4MjY4Njgz.YBrxEw.SIMYggZyafMpjB3C1kv0yPW4ffo')
+bot.run('ODA2NTk4MTU5MTc4MjY4Njgz.YBrxEw.TKazgb9BG0xDowKEL4bJI9yC5wk')
