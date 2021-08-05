@@ -5,12 +5,10 @@ from discord.ext.commands.core import command
 from discord.message import Message
 from discord.reaction import Reaction
 from discord.user import User
-from time import sleep
+import asyncio
 import os
 prefix = '!'
-intents = Intents.all()
-intents.reactions = True
-bot = commands.Bot(command_prefix = prefix, intents = intents)
+bot = commands.Bot(command_prefix = prefix)
 class XP:
   usuario = User
   experiencia = 0
