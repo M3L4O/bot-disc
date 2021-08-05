@@ -22,11 +22,33 @@ lista_usuarios = list()
 @bot.command()
 async def votacao(ctx, *emojis):
   msg = await ctx.send('Votação iniciada!')
-  if emojis != None:
+  if emojis.__len__() > 0:
     for emoji in emojis:
-      await msg.add_reactions()
+      await msg.add_reaction(emoji)
+  else:
+    await msg.add_reaction('👍')
+    await msg.add_reaction('👎')
+  await asyncio.sleep(10)
+  msg_cached = utils.get(bot.cached_messages, id = msg.id)
+  winner = msg_cached.reactions[0]
+  for reacao in msg_cached.reactions:
+    if reacao.count > winner.count:
+      winner = reacao
+  empate = list()
+  for reacao in msg_cached.reactions:
+    if winner.count == reacao.count:
+      empate.append(reacao.emoji)
+  if empate.__len__() == 1:
+    await ctx.send(f"A reação {winner.emoji} ganhou...")
+  else: 
+    winners = (',').join(empate)
+    await ctx.send(f"Houve um empate entre {winners} com {winner.count} reações...")
+  
 
- 
+@bot.command()
+async def change_pfx(ctx, new_prefix):
+  await ctx.send(f"O prefixo mudou de {bot.command_prefix} para {new_prefix}...")
+  bot.command_prefix = new_prefix
 
 
 @bot.command()
