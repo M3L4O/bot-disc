@@ -51,16 +51,12 @@ async def change_pfx(ctx, new_prefix):
 
 @bot.command()
 async def irritar(ctx, arg:Member):
-  if ctx.author.id != 354037985278296064:
-    return
   spam = '\t'.join(f"<@{arg.id}>" for x in range(10))
   for x in range(10):
     await ctx.send(spam)
   
 @bot.command()
 async def pertubar(ctx, arg:Member):
-  if ctx.author.id != 354037985278296064:
-    return
   spam ='\t'.join(f"<@{arg.id}>" for x in range(10))
   for x in range(30):
     await arg.send(spam)
