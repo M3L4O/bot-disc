@@ -1,4 +1,3 @@
-from itertools import count
 from discord.ext import commands
 from discord import *
 from discord.ext.commands import context
@@ -8,6 +7,7 @@ from discord.reaction import Reaction
 from discord.user import User
 import asyncio
 import os
+
 prefix = '!'
 bot = commands.Bot(command_prefix = prefix)
 
