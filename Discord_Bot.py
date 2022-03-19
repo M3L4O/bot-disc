@@ -62,10 +62,11 @@ async def irritar(ctx, arg : Member):
 
 @bot.command()
 async def perturbar(ctx, arg : Member):
-  spam ='\t'.join(f"<@{arg.id}>" for _ in range(10))
+  spam = f'Requisitado por: {ctx.message.author}'
+  spam +='\t'.join(f"<@{arg.id}>" for _ in range(10))
   for _ in range(10):
     await arg.send(spam)
-  await ctx.send(f"<@{arg.id}> foi pertubado com sucesso.")
+  await ctx.send(f"<@{arg.id}> foi pertubado com sucesso, {ctx.message.author}.")
   
 
 @bot.command()
