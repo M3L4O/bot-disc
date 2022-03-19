@@ -65,7 +65,7 @@ async def perturbar(ctx, arg : Member):
   spam ='\t'.join(f"<@{arg.id}>" for _ in range(10))
   for _ in range(10):
     await arg.send(spam)
-  await ctx.send(f"<A{arg.id}> foi pertubado com sucesso.")
+  await ctx.send(f"<@{arg.id}> foi pertubado com sucesso.")
   
 
 @bot.command()
