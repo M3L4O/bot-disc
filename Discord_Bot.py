@@ -1,10 +1,5 @@
 from discord.ext import commands
 from discord import *
-from discord.ext.commands import context
-from discord.ext.commands.core import command
-from discord.message import Message
-from discord.reaction import Reaction
-from discord.user import User
 import asyncio
 import os
 
@@ -62,10 +57,11 @@ async def irritar(ctx, arg : Member):
 
 @bot.command()
 async def perturbar(ctx, arg : Member):
-  spam = f'Requisitado por: {ctx.message.author}'
-  spam +='\t'.join(f"<@{arg.id}>" for _ in range(10))
+  cabecalho = f'Requisitado por: {ctx.message.author}'
+  spam ='\t'.join(f"<@{arg.id}>" for _ in range(10))
   for _ in range(10):
     await arg.send(spam)
+  await arg.send(cabecalho)
   await ctx.send(f"<@{arg.id}> foi pertubado com sucesso, {ctx.message.author}.")
   
 
